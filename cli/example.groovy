@@ -1,0 +1,1 @@
+response.string.contains("User-agent: *")

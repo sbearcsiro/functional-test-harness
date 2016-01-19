@@ -1,0 +1,7 @@
+{
+  "a": "something else",
+  "b": {
+    "c": "another thing",
+    "d": ["e", "f", "g"]
+  }
+}

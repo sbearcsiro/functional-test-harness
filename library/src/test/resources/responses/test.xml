@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+    <a>something else</a>
+    <b>
+        <c>another thing</c>
+        <ds>
+            <d>e</d>
+            <d>f</d>
+            <d>g</d>
+        </ds>
+    </b>
+</doc>
