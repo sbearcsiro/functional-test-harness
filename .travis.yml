@@ -1,0 +1,27 @@
+language: java
+
+sudo: false
+
+jdk:
+  - oraclejdk7
+
+branches:
+  only:
+    - develop
+    - master
+
+cache:
+  directories:
+  - $HOME/.m2/repository
+
+before_install:
+- export TZ=Australia/Canberra
+- date
+- mkdir -p ~/.m2; wget -q -O ~/.m2/settings.xml https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_maven_settings.xml
+
+script: 'mvn test'
+
+after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && mvn deploy'
+
+env:
+  global:
