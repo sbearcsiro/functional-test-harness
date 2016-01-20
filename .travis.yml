@@ -1,27 +1,21 @@
 language: java
-
 sudo: false
-
 jdk:
-  - oraclejdk7
-
+- oraclejdk7
 branches:
   only:
-    - develop
-    - master
-
+  - develop
+  - master
 cache:
   directories:
-  - $HOME/.m2/repository
-
+  - "$HOME/.m2/repository"
 before_install:
 - export TZ=Australia/Canberra
 - date
 - mkdir -p ~/.m2; wget -q -O ~/.m2/settings.xml https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_maven_settings.xml
-
-script: 'mvn test'
-
+script: mvn test
 after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && mvn deploy'
-
 env:
   global:
+  - secure: GxFiP+pGf64hNGoy+a9Y4slHDknLEQjCkZqfSmRIerlbkjmFQ6wKborEocUj1syecftbaZ9TC3t8Dwf9vYSWPrhTKpwEuIskhaalJE00CU/NuM/Hlx9BISGQW0MYlBfu4nrnlwsJsMXg4vNlG+Ly95iPHsqnVXCyJC5T9JpQtp6ggFbKOZnqynGSlLawiofcnZdtk7lEgiBTEVSvWp3baIOotxcAyAgULGe5H8mW220FiS9P5f27dwJcwM1s+hjcmUo1J2CXnxdtTNhXmR+czPQ0/tx5i0olDceV93froRFZ9OIy6lBTh0hIvuHErlBb7fyFYdMyj/5+rwgRWwT6HHnKvZ6HfbOYLusXT7TOwEOtNjAM/bZpo9XfKxhSM/0AYIrXC1vea5iIBRR4W7jiGGCPClYPIl3DvMx2oFdUwKVMOcTLTePRtFrviBtDYJT7fg94rUIpsosh21mxMOIg6bdDSdxxfMEigSE58wU/gwIq/TNOOnZFt3XYePGoYnU0i8/02UvROtIXjVKJ35dnHbK0Pw3tlu/g2bVvRoCujw4Qsc9Iyc1vi64hiJvzZxzSFPS/wB00Ay/PzzHt9NMQPG+nTStb61K47BBzhk6+O864PeIROJlz7+YmyK4A7WljOeKk8hcvVsmAV6dSQezFwacqkXOgf5U7NjON7aXdvVg=
+  - secure: ZD+zszmYH4fq0nTjKpq8a5QSIrTAJ9JOssSKxswUboOO89j5Jt+QrmA2XwfCqAueuyTii98fv8XkfDRMiIuD03uwIIgGEouMR5eVJE0Jq1Pi2PTqX4Q9XMr50OS6G8dUxVUwbN69W/95SgCjUZ9/Tc0mpBXdlMUah+OC71U2rCfA1Q/1Zy3uqdHBCgCWiTV3oBDreMdbwnt7Zx6yJYwxh+n9vTjJO+eIwWJAJxq8PUjVIdDwO1DcRymeFww9fo/Fe8W+uWoHdaNhzDd9mO27sk8hgQcuPkGZh1s5H66WrRbsFrZkYuNfOLDyoBd69y04WpsGfT+b/eswnoFvS2E8pHpglZDBJ73q86MP+G95G6/I6M/w2SPHyGF47m1Tt/vDN+1+N5eG/MZasrStQ5t3XhaelaHYKCrP020ZqKeCVFwRnzjS4+5sfpZIB1Gu1dQ1Dggoh1+fWgOE7KhmQMRwC2v/uUJ7kAgOrb1XIQ9z2iTozbj7QiS9J9kxjM6w0XNzKUR4hYpeiLI6zVnOn3Qf36BTWDhmD2w1gqMf7vfVTawHYxKiS82ySRcjRMo23EHOSCc68mnGJqL3LEY6dHgsDdIEv2P07sGkucWXLwQ8D/4tuzGX7ri/eoaIuWkiq1be+9Z98U1seD1F8IYHADdpPjaS3HEHDeIYat9daGLhMIw=
