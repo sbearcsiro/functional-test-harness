@@ -94,8 +94,12 @@ public class RealisedBody {
     }
 
     public boolean evaluateJsonPath(PathTest test) {
-        List<String> results = jsonDocument.read(test.path);
-        return evaluateStringList(test, results);
+        List<?> results = jsonDocument.read(test.path);
+        val strings = new ArrayList<String>(results.size());
+        for (val result: results) {
+            strings.add(result == null ? "" : result.toString());
+        }
+        return evaluateStringList(test, strings);
     }
 
     public boolean evaluateXmlPath(PathTest test) {

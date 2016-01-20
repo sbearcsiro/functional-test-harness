@@ -25,6 +25,15 @@ tests {  // tests wrapper
       { path="/slideshow/slide/title", testExpression="\\w" } // xpath tests are also supported
     ]
   }
+  httpbin-post {
+    url="http://httpbin.org/post"
+    method=POST // Send a POST, PUT, PATCH, DELETE, etc instead of GET
+    contentType=application/json // Content type of the HTTP request body
+    entity=example.json // File that contains the data for the HTTP request body
+    pathTests= [
+      { path="json.q", testExpression="1" }
+    ]
+  }
   httpbin-robots {
     url="http://httpbin.org/robots.txt"
     acceptHeader=text/html
@@ -101,17 +110,22 @@ Where `example.conf` is a path to a configuration file.  It will produce output 
 
 ```
 $ java -jar target/functional-test-harness-jar-with-dependencies.jar example.conf 
-Running httpbin-xml (1/3)
+Running httpbin-post (1/4)
+HTTP Request was successful... ✓
+Evaluating path json.q against 1... ✓
+
+Running httpbin-xml (2/4)
 HTTP Request was successful... ✓
 Evaluating path /slideshow/slide/title against \w... ✓
 
-Running httpbin-robots (2/3)
+Running httpbin-robots (3/4)
 HTTP Request was successful... ✓
 Evaluating script: example.groovy... ✓
 
-Running httpbin-get (3/3)
+Running httpbin-get (4/4)
 HTTP Request was successful... ✓
 Evaluating path url against http://httpbin.org/get... ✓
+
 
 ```
 

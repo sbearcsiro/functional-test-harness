@@ -10,8 +10,29 @@ import java.util.Set;
 
 import static au.org.ala.test.Util.notEmpty;
 import static au.org.ala.test.Util.read;
+import static com.typesafe.config.ConfigFactory.systemEnvironment;
+import static com.typesafe.config.ConfigFactory.systemProperties;
 import static okhttp3.MediaType.*;
 
+/**
+ * Manages a set of tests and provides the ability to run each of them.
+ *
+ * Use the {@link Builder} to create an HttpTestRunner instance.
+ *
+ * Then use the following pseudo code to run all tests:
+ * <code>
+ *     runner = HttpTestRunner.Builder.withFileResolver("tests.conf").groovyScriptEvaluator().build()
+ *     for (test : runner.tests) {
+ *         response = runner.run(test);
+ *         assert response.isSuccessful();
+ *         for (pathTest : test.pathTests) {
+ *             assert response.evaluatePath(pathTest);
+ *         }
+ *
+ *         assert runner.evaluateScriptTest(test.script, response);
+ *     }
+ * </code>
+ */
 public class HttpTestRunner {
 
     private final Resolver resolver;
@@ -27,7 +48,7 @@ public class HttpTestRunner {
         this.client = client;
         this.resolver = resolver;
         this.scriptEvaluator = scriptEvaluator;
-        this.settings = new Settings(ConfigFactory.parseReader(resolver.getConfigFileReader()).resolveWith(ConfigFactory.systemProperties().withFallback(ConfigFactory.systemEnvironment())));
+        this.settings = new Settings(ConfigFactory.parseReader(resolver.getConfigFileReader()).resolveWith(systemProperties().withFallback(systemEnvironment())));
     }
 
     public Set<HttpTest> getTests() {
@@ -38,11 +59,6 @@ public class HttpTestRunner {
         val request = buildRequest(test);
         val response =  client.newCall(request).execute();
         //if (!response.isSuccessful()) throw new AssertionError("Boo");
-        return getRealisedBody(response);
-    }
-
-
-    public RealisedBody getRealisedBody(Response response) throws IOException {
         return new RealisedBody(response);
     }
 
@@ -89,7 +105,11 @@ public class HttpTestRunner {
         }
 
         public static Builder withClasspathResolver(String configPath) {
-            return new Builder(new ClasspathResolver(configPath));
+            return new Builder(UrlResolver.forClasspath(configPath));
+        }
+
+        public static Builder withUrlResolver(String url) {
+            return new Builder(UrlResolver.forUrl(url));
         }
 
         public Builder client(OkHttpClient client) {
@@ -102,6 +122,12 @@ public class HttpTestRunner {
             return this;
         }
 
+        /**
+         * Adds a Groovy {@link ScriptEvaluator} to the HTTP test runner.  Ensure that Groovy is on the
+         * class path before calling this method.
+         *
+         * @return This builder.
+         */
         public Builder groovyScriptEvaluator() {
             try {
                 this.scriptEvaluator = new GroovyScriptEvaluator();
