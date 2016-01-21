@@ -58,7 +58,7 @@
                 <configuration>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
-                        <descriptorRef>bin</descriptorRef>
+                        <!--descriptorRef>bin</descriptorRef-->
                     </descriptorRefs>
                     <archive>
                         <manifest>

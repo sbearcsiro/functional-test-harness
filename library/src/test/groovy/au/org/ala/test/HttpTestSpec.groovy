@@ -38,7 +38,7 @@ class HttpTestSpec extends Specification {
 
         then:
 
-        response.statusCode == 200
+        response.statusCode in 200..299
 
         for (def pt : test.pathTests)
             assert response.evaluatePath(pt)
