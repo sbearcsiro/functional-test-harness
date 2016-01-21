@@ -126,6 +126,8 @@ Running httpbin-get (4/4)
 HTTP Request was successful... ✓
 Evaluating path url against http://httpbin.org/get... ✓
 
+$ echo $?
+0
 
 ```
 
