@@ -15,7 +15,7 @@ before_install:
 - mkdir -p ~/.m2; wget -q -O ~/.m2/settings.xml https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_maven_settings.xml
 install: true
 script: mvn test -B -V
-after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && mvn deploy'
+after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && mvn deploy -B -Dmaven.test.skip=true'
 env:
   global:
   - secure: GxFiP+pGf64hNGoy+a9Y4slHDknLEQjCkZqfSmRIerlbkjmFQ6wKborEocUj1syecftbaZ9TC3t8Dwf9vYSWPrhTKpwEuIskhaalJE00CU/NuM/Hlx9BISGQW0MYlBfu4nrnlwsJsMXg4vNlG+Ly95iPHsqnVXCyJC5T9JpQtp6ggFbKOZnqynGSlLawiofcnZdtk7lEgiBTEVSvWp3baIOotxcAyAgULGe5H8mW220FiS9P5f27dwJcwM1s+hjcmUo1J2CXnxdtTNhXmR+czPQ0/tx5i0olDceV93froRFZ9OIy6lBTh0hIvuHErlBb7fyFYdMyj/5+rwgRWwT6HHnKvZ6HfbOYLusXT7TOwEOtNjAM/bZpo9XfKxhSM/0AYIrXC1vea5iIBRR4W7jiGGCPClYPIl3DvMx2oFdUwKVMOcTLTePRtFrviBtDYJT7fg94rUIpsosh21mxMOIg6bdDSdxxfMEigSE58wU/gwIq/TNOOnZFt3XYePGoYnU0i8/02UvROtIXjVKJ35dnHbK0Pw3tlu/g2bVvRoCujw4Qsc9Iyc1vi64hiJvzZxzSFPS/wB00Ay/PzzHt9NMQPG+nTStb61K47BBzhk6+O864PeIROJlz7+YmyK4A7WljOeKk8hcvVsmAV6dSQezFwacqkXOgf5U7NjON7aXdvVg=
