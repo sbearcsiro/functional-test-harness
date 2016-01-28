@@ -5,22 +5,20 @@ import com.typesafe.config.ConfigFactory;
 import lombok.Getter;
 import lombok.val;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 public class Settings {
 
     private final Config config;
-    private final Set<HttpTest> httpTests;
+    private final List<HttpTest> httpTests;
 
     private static final Config defaults = ConfigFactory.load("reference-test.conf");
 
     public Settings(Config config) {
         //config.checkValid(ConfigFactory.defaultReference());
         this.config = config;
-        this.httpTests = Collections.unmodifiableSet(readTests(config));
+        this.httpTests = Collections.unmodifiableList(readTests(config));
 //        validateTests();
     }
 
@@ -34,10 +32,10 @@ public class Settings {
 //        }
 //    }
 
-    private static Set<HttpTest> readTests(Config config) {
+    private static List<HttpTest> readTests(Config config) {
         val testsObj = config.getObject("tests");
         val testsConfig = testsObj.toConfig();
-        val tests = new HashSet<HttpTest>();
+        val tests = new ArrayList<HttpTest>(testsObj.size());
         for (val name : testsObj.keySet()) {
             tests.add(HttpTest.fromConfig(name, testsConfig.getConfig(name).withFallback(defaults)));
         }

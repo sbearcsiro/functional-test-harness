@@ -6,6 +6,7 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 import java.util.Set;
 
 import static au.org.ala.test.Util.notEmpty;
@@ -51,7 +52,7 @@ public class HttpTestRunner {
         this.settings = new Settings(ConfigFactory.parseReader(resolver.getConfigFileReader()).resolveWith(systemProperties().withFallback(systemEnvironment())));
     }
 
-    public Set<HttpTest> getTests() {
+    public List<HttpTest> getTests() {
         return settings.getHttpTests();
     }
 
@@ -133,7 +134,7 @@ public class HttpTestRunner {
                 this.scriptEvaluator = new GroovyScriptEvaluator();
                 return this;
             } catch (NoClassDefFoundError e) {
-                throw new IllegalStateException("Groovy no present on classpath");
+                throw new IllegalStateException("Groovy not present on classpath");
             }
         }
 

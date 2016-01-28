@@ -47,7 +47,7 @@ class HttpTestSpec extends Specification {
             assert runner.evaluateScriptTest(test.script, response)
 
         where:
-        test << runner.tests.toList()
+        test << runner.tests
     }
 
 }
